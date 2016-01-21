@@ -49,15 +49,15 @@ def quadrado(matriz, lado):
 
 def quadrado_vazado(matriz, lado):
     tamanho = len(matriz)
-    meio = int(tamanho/2)
+    meio = tamanho/2 - 0.5
     print(meio)
     for l in range(tamanho):
         for c in range(tamanho):
-            if lado == abs(meio - l) and meio - lado <= c <= meio + lado \
-            or lado == abs(meio - c) and meio - lado <= l <= meio + lado: 
+            if lado == int(abs(meio - l)) and lado >= int(abs(meio - c)) \
+            or lado == int(abs(meio - c)) and lado >= int(abs(meio - l)): 
                 matriz[l][c] = 1
 
 
 matriz = cria_matriz(8)
-quadrado_vazado(matriz, 2)
+quadrado_vazado(matriz, 0)
 mostra_matriz(matriz)
