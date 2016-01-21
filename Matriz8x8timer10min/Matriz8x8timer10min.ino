@@ -3,11 +3,11 @@
 
 /*
  pino 12 se conecta a DataIn 
- pino 11 se conecta a CLK 
+ pino 6 se conecta a CLK 
  pino 10 se conecta a CS 
  Estamos usando uma única matriz.
  */
-LedControl lc=LedControl(12,11,10,1);
+LedControl lc=LedControl(12,6,10,1);
 
 /* Delay entre os leds = 9,375 segundos 
  *   ou 9375 milissegundos
@@ -51,7 +51,9 @@ void detona() {
       //apaga todos os leds inicialmente
       lc.clearDisplay(0);
       quadrado(t);
-      delay(300);
+      noTone(5);
+      tone(5, 864, 25);
+      delay(500);
   }
 }
 
