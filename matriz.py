@@ -28,6 +28,24 @@ def preenche_com_1(matriz):
             matriz[l][c] = 1
 
 
-matriz = cria_matriz(8)
+def linha_diagonal(matriz):
+    tamanho = len(matriz)
+    for l in range(tamanho):
+        for c in range(tamanho):
+            if l == c:
+                matriz[l][c] = 1
 
+
+def quadrado(matriz, lado):
+    tamanho = len(matriz)
+    meio = int(tamanho/2)
+    for l in range(tamanho):
+        for c in range(tamanho):
+            if l - meio <= lado:
+                if c - meio <= lado:
+                    matriz[l][c] = 1
+
+
+matriz = cria_matriz(8)
+quadrado(matriz, 1)
 mostra_matriz(matriz)
