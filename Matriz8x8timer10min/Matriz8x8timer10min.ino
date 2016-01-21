@@ -1,37 +1,41 @@
-//We always have to include the library
+//Biblioteca que controla o chip MAX7288
 #include "LedControl.h"
 
 /*
- Now we need a LedControl to work with.
- ***** These pin numbers will probably not work with your hardware *****
- pin 12 is connected to the DataIn 
- pin 11 is connected to the CLK 
- pin 10 is connected to CS 
- We have only a single MAX72XX.
+ pino 12 se conecta a DataIn 
+ pino 11 se conecta a CLK 
+ pino 10 se conecta a CS 
+ Estamos usando uma única matriz.
  */
 LedControl lc=LedControl(12,11,10,1);
 
-/* we always wait a bit between updates of the display */
-unsigned long delaytime=9375; // = 600/64 * 1000
+/* Delay entre os leds = 9,375 segundos 
+ *   ou 9375 milissegundos
+ *   para inteirar 10 minutos 
+ *   (são 64 leds) 
+ *  600/64 * 1000 = 9375 */ 
+unsigned long delaytime=9375;
 
 void setup() {
-  /*
-   The MAX72XX is in power-saving mode on startup,
-   we have to do a wakeup call
-   */
+  /* O chip inicia em modo de 
+   * economia de energia e deve
+   * ser inicializado */
   lc.shutdown(0,false);
-  /* Set the brightness to a medium values */
+  /* Brilho médio */
   lc.setIntensity(0,8);
-  /* and clear the display */
+  /* Limpa o display */
   lc.clearDisplay(0);
 }
 
-void single() {
+void conta_tempo() {
+  //acende todos os leds inicialmente
   for(int row=0;row<8;row++) {
     for(int col=0;col<8;col++) {
       lc.setLed(0,row,col,true);
     }
-  }  
+  }
+
+  //vai apagando os leds aos poucos
   for(int row=0;row<8;row++) {
     for(int col=0;col<8;col++) {
       delay(delaytime);
@@ -41,6 +45,32 @@ void single() {
   }
 }
 
+void detona() {
+  //desenha quadrados cada vez maiores
+  for(int t=0; t<4; t++) {
+      //apaga todos os leds inicialmente
+      lc.clearDisplay(0);
+      quadrado(t);
+      delay(300);
+  }
+}
+
+void quadrado(int lado) {
+  int TAMANHO = 8;
+  float MEIO = 3.5;
+  for(int row=0;row<8;row++) {
+    for(int col=0;col<8;col++) {
+      if (lado == int(abs(MEIO - row)) and lado >= int(abs(MEIO - col))
+      or lado == int(abs(MEIO - col)) and lado >= int(abs(MEIO - row))){
+        lc.setLed(0,row,col,true);
+      }
+    }
+  }
+}
+
 void loop() { 
-  single();
+  conta_tempo();
+  while(true) {
+    detona();
+  }
 }
