@@ -6,7 +6,7 @@ def cria_matriz(tamanho):
     for linha in range(8):
         lcoluna = []
         for coluna in range(8):
-            lcoluna.append([])
+            lcoluna.append(0)
         matriz.append(lcoluna)
     return matriz
 
@@ -22,11 +22,12 @@ def mostra_matriz(matriz):
         print(rlinha)
 
 
+def preenche_com_1(matriz):
+    for l in range(len(matriz)):
+        for c in range(len(matriz[0])):
+            matriz[l][c] = 1
+
+
 matriz = cria_matriz(8)
-for l in matriz:
-    #print(l)
-    for c in l:
-        #print(c)
-        c.append(1)
 
 mostra_matriz(matriz)
