@@ -39,13 +39,14 @@ def linha_diagonal(matriz):
 def quadrado(matriz, lado):
     tamanho = len(matriz)
     meio = int(tamanho/2)
+    print(meio)
     for l in range(tamanho):
         for c in range(tamanho):
-            if l - meio <= lado:
-                if c - meio <= lado:
-                    matriz[l][c] = 1
+            if (l >= meio - lado and l < meio + lado) \
+            and (c >= meio - lado and c < meio + lado):
+                matriz[l][c] = 1
 
 
 matriz = cria_matriz(8)
-quadrado(matriz, 1)
+quadrado(matriz, 3)
 mostra_matriz(matriz)
